@@ -20,7 +20,8 @@
     "url": "http://github.com/jimmyrocks/tag-db"
   },
   "dependencies": {
-    "pg": "2.8.2",
-    "node-dir": "0.1.5"
+    "pg": "3.1.0",
+    "node-dir": "0.1.5",
+    "q": "1.0.1"
   }
 }
