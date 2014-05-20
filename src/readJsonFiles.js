@@ -1,4 +1,4 @@
-var config = require('./config'),
+var config = require('../config'),
   dir = require('node-dir'),
   getFiles = function(callback) {
     var jsonStore = {};
