@@ -3,8 +3,9 @@
 CREATE TABLE
 tag_list
 (
-  name text, -- The English name for the feature
-  geommetry text[], --Valid geometry types for the feature
+  pathName text NOT NULL, --The path where the json file resides
+  name text NOT NULL, -- The English name for the feature
+  geommetry text[] NOT NULL, --Valid geometry types for the feature
   tags json, --Tags that must be present for the preset to match
   addTags json, --Tags that are added when changing to the preset (default is the same value as 'tags')
   removeTags json, --Tags that are removed when changing to another preset (default is the same value as 'tags')
