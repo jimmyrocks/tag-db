@@ -1,7 +1,7 @@
 --https://raw.githubusercontent.com/nationalparkservice/places/master/data/presets/schema/preset.json
 
 CREATE TABLE
-tags
+tag_list
 (
   name text, -- The English name for the feature
   geommetry text[], --Valid geometry types for the feature
