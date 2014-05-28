@@ -51,8 +51,6 @@ module.exports = {
         var result = {
           'query': queryObj[i]
         };
-        console.log('next query______________________________');
-        console.log(JSON.stringify(queryObj[i], null, 2));
         module.exports.runQuery(
           queryObj[i].query ? queryObj[i].query : queryObj[i].toString(),
           queryObj[i].params ? queryObj[i].params : null,
@@ -69,7 +67,7 @@ module.exports = {
     next();
   },
   runQueryListAsync: function(queries, callback) {
-    var qRunQuery = function(queryObj) {
+    qRunQuery = function(queryObj) {
       var deferred = Q.defer();
       module.exports.runQuery(
         queryObj.query ? queryObj.query : queryObj.toString(),
