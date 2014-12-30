@@ -1,4 +1,4 @@
-var database = require('./database'),
+var datagres = require('datagres'),
   getFiles = require('./readJsonFiles'),
   config = require('../config');
 
@@ -82,7 +82,7 @@ var buildInsert = function(preset) {
 
 module.exports = {
   createTable: function(callback) {
-    database.runScript(config.sql.createTable, callback);
+    datagres.runScript(config.sql.createTable, callback);
   },
   updateTable: function(callback) {
     getFiles(config.presetDir, function(e, r) {
@@ -94,7 +94,7 @@ module.exports = {
           r[preset].pathname = preset;
           queryList.push(buildInsert(r[preset]));
         }
-        database.runQueryListAsync(queryList, function(de, dr) {
+        datagres.runQueryListAsync(queryList, function(de, dr) {
           callback(de, dr);
         });
       }
