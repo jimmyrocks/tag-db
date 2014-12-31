@@ -2,8 +2,7 @@
     config = require('../config');
 
   var buildInsert = function(preset) {
-    // Will probably come out of config at some point, or even be used to create the table at some point
-    // but not now
+    // TODO: Add the schema information the config file
     var schema = {
         'pathname': 'text',
         'name': 'text',
