@@ -20,6 +20,7 @@
     "url": "http://github.com/jimmyrocks/tag-db"
   },
   "dependencies": {
-    "datagres": "git+https://github.com/jimmyrocks/datagres#master"
+    "datagres": "git+https://github.com/jimmyrocks/datagres#master",
+    "node-dir": "0.1.6"
   }
 }
