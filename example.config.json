@@ -1,9 +1,22 @@
 {
-  "presetDir": "../places/data/presets/presets/",
+  "defaults": {
+    "rootDirectory": "{{env.PWD}}/sql",
+    "delimiter": ";",
+    "fileDesignator": "file:///",
+    "fileOptions": {
+      "encoding": "utf8"
+    }
+  },
+  "presetDir": "../places-editor/data/presets/presets/",
+  "sql": {
+    "createTable": "file:///create_tag_list.sql",
+    "insertValue": "file:///insert_tag.sql"
+  },
   "database": {
+    "type": "postgresql",
     "username": "USERNAME",
     "password": "PASSWORD",
-    "address": "HOSTNAME",
-    "dbname": "DATABASE_NAME"
-  
+    "address": "localhost",
+    "dbname": "DBNAME"
+  }
 }
