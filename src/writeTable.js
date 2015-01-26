@@ -2,29 +2,24 @@
     config = require('../config');
 
   var buildInsert = function(preset) {
-    // TODO: Add the schema information the config file
+    // TODO: Add the schema information to the config file
     var schema = {
         'pathname': 'text',
         'name': 'text',
         'geometry': 'text[]',
         'tags': 'json',
-        'addtags': 'json',
-        'removetags': 'json',
+        'addTags': 'json',
+        'removeTags': 'json',
         'fields': 'text[]',
         'icon': 'text',
         'maki': 'text',
         'terms': 'text[]',
         'searchable': 'boolean',
-        'matchscore': 'numeric',
+        'matchScore': 'numeric',
         'fcat': 'text',
         'displayed': 'boolean'
       },
-      insertStatement = {
-        'insert': 'INSERT INTO tag_list ',
-        'columns': [],
-        'values': [],
-        'params': []
-      },
+      insertValues = JSON.parse(JSON.stringify(schema)),
       validator = {
         'text': function(d) {
           return d.toString();
@@ -46,7 +41,7 @@
           return '{' + out.join(', ') + '}';
         },
         'numeric': function(d) {
-          return JSON.stringify(parseInt(d, 10));
+          return JSON.stringify(parseFloat(d, 10));
         },
         'boolean': function(d) {
           return d.toString();
@@ -60,44 +55,39 @@
         return validatedField;
       };
 
+    for (var idx in insertValues) {
+      insertValues[idx] = null;
+    }
     for (var column in preset) {
       // Validate and convert value here
       var validatedField = validateField(column, preset[column]);
       if (validatedField) {
-        insertStatement.columns.push(column);
-        insertStatement.params.push(validatedField);
-        insertStatement.values.push('$' + insertStatement.params.length);
+        insertValues[column] = validatedField;
       }
     }
-
-    return {
-      'query': insertStatement.insert +
-        ' (' + insertStatement.columns.join(',') +
-        ') VALUES (' + insertStatement.values.join(',') + ');',
-      'params': insertStatement.params
-    };
+    return insertValues;
   };
 
-  module.exports = function(connection) {
-    return {
-      createTable: function(callback) {
-        connection.runScript(config.sql.createTable, null, callback);
-      },
-      updateTable: function(callback) {
-        getFiles(config.presetDir, function(e, r) {
-          var queryList = [];
-          if (e) {
-            callback(e);
-          } else {
-            for (var preset in r) {
-              r[preset].pathname = preset;
-              queryList.push(buildInsert(r[preset]));
-            }
-            connection.runQueryListAsync(queryList, null, function(de, dr) {
-              callback(de, dr);
-            });
-          }
-        });
+  var getQueryList = function(callback) {
+    getFiles(config.presetDir, function(e, r) {
+      var queryList = [];
+      if (e) {
+        callback(e);
+      } else {
+        for (var preset in r) {
+          r[preset].pathname = preset;
+          queryList.push(buildInsert(r[preset]));
+        }
+        callback(e, queryList);
       }
-    };
+    });
+  };
+
+  module.exports = {
+    createTable: function(callback) {
+      callback(null, config.sql.createTable);
+    },
+    updateTable: function(callback) {
+      getQueryList(callback);
+    }
   };

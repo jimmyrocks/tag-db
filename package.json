@@ -1,6 +1,6 @@
 {
   "name": "tag-db",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JSON flat file tag list to SQL converter for rendering purposes",
   "keywords": ["nps", "OpenStreetMap", "postgres"],
   "author": "Jim McAndrew <james_mcandrew@partner.nps.gov>",
@@ -20,7 +20,7 @@
     "url": "http://github.com/jimmyrocks/tag-db"
   },
   "dependencies": {
-    "datagres": "git+https://github.com/jimmyrocks/datagres#master",
+    "datawrap": "git+https://github.com/jimmyrocks/datawrap#master",
     "node-dir": "0.1.6"
   }
 }
